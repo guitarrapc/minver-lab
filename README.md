@@ -1,6 +1,6 @@
 minver-lab
 
-## Practice
+## Q&A
 
 If there are no tag at all, then minver will use `0.0.0-alpha.0.number_of_commits_since_last_tag`
 
@@ -53,4 +53,14 @@ Use `-t` option to add `v` prefix to the version.
 $ git tag v0.1.0
 $ dotnet minver -t v
 0.1.0
+```
+
+## Practical use
+
+**Make preview release with the current date and time for every PR.**
+
+If you already released `0.1.0`, and you want to make a preview release for every PR for `0.1.1-preview-yyyyMMddHHss` then try following.
+
+```shell
+$ dotnet minver -p preview-20241210170610
 ```
