@@ -1,29 +1,42 @@
 minver-lab
 
-## Q&A
+MinVer will geenrate the version based on the git tag. The format of the version is `{major}.{minor}.{patch}-{prerelease}.{height}`. The prerelease is optional, and the height is the number of commits since the last tag.
 
-If there are no tag at all, then minver will use `0.0.0-alpha.0.number_of_commits_since_last_tag`
+If you run minver right after the tag, then the height will not shown.
 
-```bash
-# if there are already 2 commits
-$ dotnet minver
-0.0.0-alpha.0.2
+```shell
+$ git tag 0.1.0
+$ minver
+0.1.0
 ```
+
+If you commit after tag, then the height will be shown as number of commits.
+
+```shell
+$ git tag 0.1.0
+$ git commit -m "commit after tag"
+$ git commit -m "commit after tag2"
+$ minver
+0.1.1-alpha.2
+```
+
+## Q&A
 
 **Change pre-release tag**
 
-You can change prerelease tag with `-p prerelease_tag` option.
+You can change prerelease tag `-alpha` with custom message, use `-p prerelease_tag` option.
 
 ```shell
+# change -alpha to -preview
 $ dotnet minver -p preview
-0.0.0-preview.2
+0.1.1-preview.2
 ```
 
 `-p` also allow you can specify the tag to the current date and time.
 
 ```shell
 $ dotnet minver -p preview-20241210170610
-0.0.0-preview-20241210170610.2
+0.1.1-preview-20241210170610.2
 ```
 
 **Remove height part of the version**
@@ -32,7 +45,7 @@ Use `-i` option to remove the height part of the version.
 
 ```shell
 $ dotnet minver -p preview-20241210170610 -i
-0.0.0-preview-20241210170610
+0.1.1-preview-20241210170610
 ```
 
 **Update version and get result**
@@ -40,9 +53,9 @@ $ dotnet minver -p preview-20241210170610 -i
 locally git tag, and run minver to retrieve the version.
 
 ```shell
-$ git tag 0.1.0
+$ git tag 0.2.0
 $ dotnet minver
-0.1.0
+0.2.0
 ```
 
 **Use v prefix for the version**
@@ -50,9 +63,9 @@ $ dotnet minver
 Use `-t` option to add `v` prefix to the version.
 
 ```shell
-$ git tag v0.1.0
+$ git tag v0.2.0
 $ dotnet minver -t v
-0.1.0
+0.2.0
 ```
 
 ## Practical use
@@ -62,7 +75,8 @@ $ dotnet minver -t v
 If you already released `0.1.0`, and you want to make a preview release for every PR for `0.1.1-preview-yyyyMMddHHss.{height}` then try following.
 
 ```shell
-$ dotnet minver -p preview-20241210170610.1
+$ dotnet minver -p preview-20241210170610
+0.1.1-preview-20241210170610.1
 ```
 
 **Make new tag and use it to update some files**
