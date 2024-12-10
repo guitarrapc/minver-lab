@@ -59,8 +59,21 @@ $ dotnet minver -t v
 
 **Make preview release with the current date and time for every PR.**
 
-If you already released `0.1.0`, and you want to make a preview release for every PR for `0.1.1-preview-yyyyMMddHHss` then try following.
+If you already released `0.1.0`, and you want to make a preview release for every PR for `0.1.1-preview-yyyyMMddHHss.{height}` then try following.
 
 ```shell
-$ dotnet minver -p preview-20241210170610
+$ dotnet minver -p preview-20241210170610.1
+```
+
+**Make new tag and use it to update some files**
+
+If you want update some file's version string before push tag, then you can use following command.
+
+```shell
+git tag 0.1.1
+version=$(dotnet minver) # you will get 0.1.1
+
+# .... update any file
+
+git push origin 0.1.1
 ```
